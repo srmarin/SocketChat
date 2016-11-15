@@ -1,15 +1,11 @@
-package servidorchat;
-
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.Observable;
 import java.util.Observer;
-import org.apache.log4j.Logger;
 
 public class ConexionCliente extends Thread implements Observer{
-  private Logger log = Logger.getLogger(ConexionCliente.class);
   private Socket socket;
   private MensajesChat mensajes;
   private DataInputStream entradaDatos;
@@ -23,7 +19,7 @@ public class ConexionCliente extends Thread implements Observer{
       entradaDatos =new DataInputStream(socket.getInputStream());
       salidaDatos = new DataOutputStream(socket.getOutputStream());
     }catch(IOException ex){
-      log.error("Error al crear los stream de entrada y salida");
+      System.out.println("Error al crear los stream de entrada y salida");
     }
   }
 
@@ -37,13 +33,13 @@ public class ConexionCliente extends Thread implements Observer{
         mensajeRecibido = entradaDatos.readUTF();
         mensajes.setMensaje(mensajeRecibido);
       }catch(IOException ex){
-        log.info("cliente con la ip "+socket.getInetAddress().getHostName()+ " desconectado");
+        System.out.println("cliente con la ip "+socket.getInetAddress().getHostName()+ " desconectado");
 
         try{
           entradaDatos.close();
           salidaDatos.close();
         }catch(IOException ex2){
-          log.error("Error al cerrar los stream de entrada y salida de datos: "+ex2.getMessage());
+          System.out.println("Error al cerrar los stream de entrada y salida de datos: "+ex2.getMessage());
         }
       }
     }
@@ -53,8 +49,8 @@ public class ConexionCliente extends Thread implements Observer{
   public void update(Observable o,Object arg){
     try{
       salidaDatos.writeUTF(arg.toString());
-    }catch(IOException e){
-      log.error("error al enviar mensaje al cliente: "+ex.getMessage());
+    }catch(IOException ex){
+      System.out.println("error al enviar mensaje al cliente: "+ex.getMessage());
     }
   }
 }

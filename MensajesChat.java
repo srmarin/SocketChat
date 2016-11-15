@@ -1,4 +1,3 @@
-package servidorchat;
 import java.util.Observable;
 
 public class MensajesChat extends Observable{
