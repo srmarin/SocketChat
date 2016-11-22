@@ -41,6 +41,10 @@ public class ChatClient implements Runnable{
 			System.out.println("Adios. Pulsa ENTER para salir ... ... ...");
 			stop();
 		}
+		if(msg.contains("quien")){
+			System.out.println(msg);
+			System.out.println("La mae del sergio.");
+		}
 		else{
 			System.out.println(msg);
 		}
